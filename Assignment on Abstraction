@@ -1,0 +1,51 @@
+Abstraction in Python refers to the concept of hiding unnecessary details and exposing only essential information. It allows you to focus on what's important without worrying about the underlying implementation
+Abstraction helps simplify complex systems and makes code more modular and reusable.
+It compels a user to override abstract methods in a child class.
+
+c1. Example 1:
+
+class Animal(ABC):
+    def sound(self):
+        pass
+
+class Dog(Animal):
+    def sound(self):
+        print("Woof!")
+
+class Cat(Animal):
+    def sound(self):
+        print("Meow!")
+
+dog = Dog()
+dog.sound()
+
+cat = Cat()
+cat.sound()
+```
+
+2. Example 2:
+
+class Shape(ABC):
+    def area(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+
+    def area(self):
+        return self.length * self.width
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius * self.radius
+
+rectangle = Rectangle(5, 3)
+print(rectangle.area())
+
+circle = Circle(4)
+print(circle.area())
