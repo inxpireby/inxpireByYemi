@@ -1,0 +1,179 @@
+import time
+
+contacts = {}
+user_name = input('Hey there, what should I call you?: ').title().strip()
+
+print(f"\n**Hey {user_name}, Welcome To My Contact Management System App**")
+
+while True:
+    print('\nWhat would you like to do next?')
+    print("1. Add Contact")
+    print("2. Update Contact")
+    print("3. Delete Contact")
+    print("4. View Contacts")
+    print("5. Search for a contact")
+    print("6. Quit")
+    print("7. Clear all contacts\n")
+
+    # get user choice
+    user_choice = input("Enter a number to perform an operation: ").strip()
+
+    # Checking and casting user's choice to the right format
+    if user_choice.isdigit():
+        user_choice = int(user_choice)
+
+        if user_choice == 6:
+            print('\nQuiting app...\n')
+            time.sleep(3)
+            print(f"Bye for now, {user_name}. Come back soon.\n")
+            break
+
+        # To add a contact
+        elif user_choice == 1:
+            name = input("Enter contact name: ").capitalize().strip()
+            phone_num = input(f"Enter phone number for {name}: ").strip()
+            # Checking if it's all digit
+            if phone_num.isdigit():
+                if len(phone_num) == 11:
+                    # Casting to integer
+                    phone_num = int(phone_num)
+                    # pair the value with the key
+                    contacts[name] = phone_num
+                    print('Saving contact...')
+                    time.sleep(2)
+                    print(f'\n{name} has been saved successfully.')
+                else:
+                    print(f"\n{user_name}, you've entered an invalid phone number, must be 11 digits." )
+            else:
+                print(f'{phone_num} is an invalid phone number')
+
+        # Updating a contact   
+        elif user_choice == 2:
+            # Checking if contact list is empty
+            if len(contacts) == 0:
+                print('\nContact list is empty, please add contacts')
+
+            else:
+                update = input('What do you want to update (name or phone number)?: ').lower().strip()
+                # Updating a phone number
+                if update == 'phone number' or update == 'number':
+                    name = input("Enter contact name to update: ").capitalize().strip()
+                    # check if name exist before performing update 
+                    if name in contacts:
+                        new_phone_num = input("Enter new phone number: ").strip()
+                        if new_phone_num.isdigit():
+                            if len(new_phone_num) == 11:
+                                new_phone_num = int(new_phone_num)
+                                # update new phone number to the name
+                                contacts[name] = new_phone_num
+                                print('Saving...')
+                                time.sleep(3)
+                                print(f"\n{name}'s contact has been updated successfully.")            
+                            else:
+                                print(f"\n{user_name}, you've entered an invalid phone number, must be 11 digits." ) 
+                        else:
+                            print(f'{new_phone_num} is an invalid phone number')           
+                    else:
+                        print(f'\nOops! {name} doesn\'t exist in your contact list.')
+
+                        # If the name is not in contact list, user can add it
+                        new_name = input('\nWould you like to save this contact?(Yes/No): ').capitalize().strip()
+                        if new_name == 'Yes':
+                            name = input("Enter contact name: ").capitalize().strip()
+                            phone_num = input("Enter phone number: ").strip()
+                            if phone_num.isdigit():
+                                if len(phone_num) == 11:
+                                    phone_num = int(phone_num)
+                                    # pair the value with the key
+                                    contacts[name] = phone_num
+                                    print('Saving contact...')
+                                    time.sleep(2)
+                                    print(f'\n{name} has been saved successfully.')
+                                else:
+                                    print(f"\n{user_name}, you've entered an invalid phone number, must be 11 digits." )
+                            else:
+                                print(f'{phone_num} is an invalid phone number format')
+                        elif new_name == 'No':
+                            print('\nOkay, not saved.')
+                        else:
+                            print(f"That's an invalid response, {user_name}. Action denied")
+
+                # Updating a name in contact list
+                elif update == 'name':
+                    if len(contacts) == 0:
+                        print('\nContact list is empty, please add contacts')
+                    else:
+                        name = input('Whose name do you want to update?: ').strip().capitalize()
+                        if name in contacts:
+                            updated_name = input(f'Enter the updated name for {name}: ').strip().capitalize()
+                            print('Updating contact...')
+                            time.sleep(2) 
+                            contacts[updated_name] = contacts[name]
+                            del contacts[name]                                                      
+                            print('Update successful')
+                        else:
+                            print(f"{name} wasn't found in your contact list.")
+                else:
+                    print(f'\n{user_name}, kindly enter "name" or "phone number" to make an update')
+
+        # To delete a contact
+        elif user_choice == 3:
+            if len(contacts) == 0:
+                print('\nContact list is empty, please add contacts')
+            # check if name exist before performing delete operation
+            else:
+                name = input("Enter contact name to delete: ").capitalize().strip()
+                if name in contacts:
+                    # delete key from dict
+                    del contacts[name]
+                    print(f'Removing {name} from contacts...\n')
+                    time.sleep(3)
+                    print('Contact removed successfully.')
+                else:
+                    print('\nOops! Contact not found in contacts')
+
+        # To display contacts
+        elif user_choice == 4:
+            print("Displaying contacts ...\n")
+            time.sleep(3)
+            # Check if there are contacts on the list
+            if len(contacts) == 0:
+                print('No contacts, try adding contacts.')
+            else:
+                print('Contacts')
+                for name, phone_num in contacts.items():
+                    print(f'{name} -> {phone_num}')
+
+        # To search for a contact
+        elif user_choice == 5:
+            search = input('Enter a contact name to search: ').strip().capitalize()
+            print('Searching...\n')
+            time.sleep(2)
+            found = False
+            for name, number in contacts.items():
+                if search[:2] in name[:2]:
+                    found = True
+                    print(f'{name} -> {number}')
+            if not found:
+                print('No contacts were found')
+        
+        # To clear all contacts on the list
+        elif user_choice == 7:
+            if len(contacts) == 0:
+                print(f'\nYou have no contacts saved, {user_name}') 
+            else:
+                # Warning message
+                clear = input(f"\n{user_name}, you're about to clear all saved contacts on your list('continue' or 'cancel'): ").strip().lower()
+                if clear == 'continue':
+                    print('Clearing contact list...')
+                    time.sleep(4)
+                    contacts.clear()
+                    print('Contact list successfully cleared.')
+                elif clear == 'cancel':
+                    print('\nAction cancelled.')
+                else:
+                    print('\nInvalid response. Action denied.')          
+        else:
+            print(f'Invalid command "{user_choice}", please choose 1-7')
+    else:
+        print(f'\n{user_choice} is an invalid input, please make sure you enter a number between 1 - 7. Thanks')
