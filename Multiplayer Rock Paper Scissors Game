@@ -1,0 +1,31 @@
+1. Take player1's input and check for validity
+2. If player1's input is invalid print error message, else, next step
+3. Take player2's input and check for validity
+4. If player2's input is invalid print error message, else, go to next step
+5. Check players inputs according to the rules of the game
+6. If there's a tie print message, else go to next step
+7. Check for a winner and print message
+'''
+# Get input from Player 1
+player1_choice = input("Player 1, enter your choice (Rock, Paper, or Scissors): ").replace(' ', '').title()
+
+# Check for Player 1's valid input
+if player1_choice != "Rock" and player1_choice != "Paper" and player1_choice != "Scissors":
+    print(f"\nPlayer 1, {player1_choice} is not a valid choice. Please choose Rock, Paper, or Scissors.\n")    
+else:
+    # Get input from Player 2
+    player2_choice = input("Player 2, enter your choice (Rock, Paper, or Scissors): ").replace(' ', '').title()
+
+    # Check for Player 2's valid input
+    if player2_choice != "Rock" and player2_choice != "Paper" and player2_choice != "Scissors":
+        print(f"\nPlayer 2, {player2_choice} is not a valid choice. Choose Rock, Paper, or Scissors.\n")
+    else:
+        # Determine the winner
+        if player1_choice == player2_choice:
+            print(f"\n{player1_choice} matches {player2_choice}: It's a tie!\n")
+        elif ((player1_choice == "Rock" and player2_choice == "Scissors") or 
+              (player1_choice == "Paper" and player2_choice == "Rock") or 
+              (player1_choice == "Scissors" and player2_choice == "Paper")):
+            print(f"\n{player1_choice} beats {player2_choice}: Player 1 wins!\n")
+        else:
+            print(f"\n{player2_choice} beats {player1_choice}: Player 2 wins!\n")
