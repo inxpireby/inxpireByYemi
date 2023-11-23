@@ -1,0 +1,30 @@
+# Write a program on an authorization decorator that checks if a user is auhorized to execute a function
+
+def authorization_decorator(function):
+    def wrapper(user):
+        # Check if the user is authorized
+        if user.is_authorized:
+            # User is authorized, execute the function
+            return function(user)
+        else:
+            # User is not authorized, return an error message or handle it accordingly
+            return "Sorry, you are not authorized to execute this function."
+    return wrapper
+
+# Example usage
+@authorization_decorator
+def my_function(user):
+    # Function logic goes here
+    return "Function executed successfully!"
+
+# Create a user object
+class User:
+    def __init__(self, is_authorized):
+        self.is_authorized = is_authorized
+
+# Create a user instance
+user = User(is_authorized=True)
+
+# Call the function
+result = my_function(user)
+print(result)
